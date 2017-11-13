@@ -1,4 +1,4 @@
-FROM python:3.6.3
+FROM python:3.6.3-slim
 
 LABEL maintainer="Alex Louden <alex@louden.com>"
 
