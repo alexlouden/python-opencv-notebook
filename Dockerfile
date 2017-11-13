@@ -44,6 +44,9 @@ RUN apt-get update && \
         && apt-get clean && \
         rm -rf /var/lib/apt/lists/*
 
+# Required for OpenCV to build
+RUN pip install numpy
+
 WORKDIR /
 
 # Get and install OpenCV 3.3
@@ -76,6 +79,14 @@ RUN wget https://github.com/opencv/opencv/archive/3.3.0.zip \
 COPY requirements.txt /
 RUN pip install -r requirements.txt
 
-COPY run-notebook.sh /
+RUN mkdir /app && mkdir /app/data
+COPY run-notebook.sh /app/
+RUN chmod +x /app/run-notebook.sh
 
-CMD ["run-notebook.sh"]
+# Working directory
+RUN cd /app/data
+VOLUME /app/data
+
+EXPOSE 8888
+
+CMD ["/app/run-notebook.sh"]
