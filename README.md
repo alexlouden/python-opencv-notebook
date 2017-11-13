@@ -1,36 +1,35 @@
 # python-opencv-notebook
 
-Ready to run jupyter notebook in docker, with Python, OpenCV 3.3 and more.
+Ready to run jupyter notebook in docker, with Python 3.6, OpenCV 3.3 and more.
 
 ![](preview.png)
 
-### Setup
+### Usage
 
 1. Install Docker CE - [for Mac](https://www.docker.com/docker-mac), [for Windows](https://www.docker.com/docker-windows) or [for Ubuntu](https://docs.docker.com/engine/installation/linux/ubuntu/)
 
-2. Pull the image
+2. Run this command from your project directory:
 
     ```
-    docker pull alexlouden/python-opencv-notebook
+    docker run --interactive --init --rm --name opencv-notebook --publish 8888:8888 --volume `pwd`/data:/app/data alexlouden/python-opencv-notebook
     ```
 
-3. Run it from your project directory. The `data` directory will be created, shared with the docker container, and the jupyter notebook will be launched from here.
+    The `data` directory will be created, shared with the docker container, and the jupyter notebook will be launched from here.
 
-    ```
-    docker run --interactive --init --name opencv-notebook --publish 8888:8888 --volume `pwd`/data:/app/data alexlouden/python-opencv-notebook
-    ```
+    Run Control + C to shut down the notebooks and stop the docker container.
 
-    Parameters:
+    Parameter explanation:
 
-    - `--interactive` - runs in foreground (will run in the background if you don't supply this)
+    - `--interactive` - runs in foreground (will run in the background without)
     - `--init` - runs using [tini](https://github.com/krallin/tini) to reap zombies
+    - `--rm` - container is removed after exit. As long as you keep everything in `data` you won't lose anything. If you don't pass this argument then after the container is stopped you can run `docker start -i opencv-notebook` to restart it, or `docker rm opencv-notebook` to remove it.
     - `--name` - name the docker container
     - `--publish` - choose which ports to expose from the docker container to host
     - `--volume` - bind a volume, used to share data between container and host (must be an absolute path - I've used `pwd`)
 
     See [docker docs](https://docs.docker.com/engine/reference/commandline/run/) for more info.
 
-4. You should see the following output:
+3. You should see the following output:
 
     > Copy/paste this URL into your browser when you connect for the first time,
     to login with a token:
@@ -38,12 +37,6 @@ Ready to run jupyter notebook in docker, with Python, OpenCV 3.3 and more.
 
     Open the URL in your browser, and you should get access!
 
-5. Stop / start container
-
-    ```
-    docker stop opencv-notebook
-    docker start -i opencv-notebook
-    ```
 
 ### Notes
 
