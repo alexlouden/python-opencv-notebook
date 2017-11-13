@@ -20,12 +20,6 @@ RUN apt-get update && \
         lmodern \
         pandoc \
         python-dev \
-        texlive-fonts-extra \
-        texlive-fonts-recommended \
-        texlive-generic-recommended \
-        texlive-latex-base \
-        texlive-latex-extra \
-        texlive-xetex \
         vim \
         unzip \
         wget \
