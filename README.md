@@ -34,7 +34,7 @@ Ready to run jupyter notebook in docker, with Python, OpenCV 3.3 and more.
 
     > Copy/paste this URL into your browser when you connect for the first time,
     to login with a token:
-    >   http://localhost:8888/?token=<secrettoken>
+    >   http://localhost:8888/?token=longsecrettoken
 
     Open the URL in your browser, and you should get access!
 
