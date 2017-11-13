@@ -7,7 +7,6 @@ USER root
 # Install all OS dependencies
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
-        apt-get -yq dist-upgrade && \
         apt-get install -yq --no-install-recommends \
         build-essential \
         cmake \
@@ -41,8 +40,7 @@ RUN apt-get update && \
         libjasper-dev \
         libavformat-dev \
         libpq-dev \
-        && apt-get clean && \
-        rm -rf /var/lib/apt/lists/*
+        && rm -rf /var/lib/apt/lists/*
 
 # Required for OpenCV to build
 RUN pip install numpy
@@ -75,18 +73,16 @@ RUN wget https://github.com/opencv/opencv/archive/3.3.0.zip \
 && rm /3.3.0.zip \
 && rm -r /opencv-3.3.0
 
-# Install python dependencies
-COPY requirements.txt /
-RUN pip install -r requirements.txt
+WORKDIR /app/data
 
-RUN mkdir /app && mkdir /app/data
+# Install python dependencies
+COPY requirements.txt /app/
+RUN pip install -r /app/requirements.txt
+
 COPY run-notebook.sh /app/
 RUN chmod +x /app/run-notebook.sh
 
-# Working directory
-RUN cd /app/data
 VOLUME /app/data
-
 EXPOSE 8888
 
 CMD ["/app/run-notebook.sh"]
