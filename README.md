@@ -10,8 +10,8 @@ Ready to run jupyter notebook in docker, with Python 3.6, OpenCV 3.3 and more.
 
 2. Run this command from your project directory:
 
-    ```
-    docker run --interactive --init --rm --name opencv-notebook --publish 8888:8888 --volume `pwd`/data:/app/data alexlouden/python-opencv-notebook
+    ```bash
+    docker run --interactive --tty --init --rm --name opencv-notebook --publish 8888:8888 --volume `pwd`/data:/app/data alexlouden/python-opencv-notebook
     ```
 
     The `data` directory will be created, shared with the docker container, and the jupyter notebook will be launched from here.
@@ -21,6 +21,7 @@ Ready to run jupyter notebook in docker, with Python 3.6, OpenCV 3.3 and more.
     Parameter explanation:
 
     - `--interactive` - runs in foreground (will run in the background without)
+    - `--tty` - runs a psudo TTY (for shell interaction, shell colours, Control + C)
     - `--init` - runs using [tini](https://github.com/krallin/tini) to reap zombies
     - `--rm` - container is removed after exit. As long as you keep everything in `data` you won't lose anything. If you don't pass this argument then after the container is stopped you can run `docker start -i opencv-notebook` to restart it, or `docker rm opencv-notebook` to remove it.
     - `--name` - name the docker container
@@ -50,7 +51,7 @@ Ready to run jupyter notebook in docker, with Python 3.6, OpenCV 3.3 and more.
 
 You can clone this repo and build the image yourself with:
 
-```
+```bash
 git clone git@github.com:alexlouden/python-opencv-notebook.git
 cd python-opencv-notebook
 docker build -t python-opencv-notebook .
