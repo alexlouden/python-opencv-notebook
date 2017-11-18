@@ -41,12 +41,17 @@ RUN pip install numpy
 
 WORKDIR /
 
-# Get and install OpenCV 3.3
-RUN wget https://github.com/opencv/opencv/archive/3.3.0.zip \
-&& unzip 3.3.0.zip \
+# Get and install OpenCV 3.3 and opencv_contrib 3.3
+RUN wget -q -O opencv.zip https://github.com/opencv/opencv/archive/3.3.0.zip \
+&& wget -q -O contrib.zip https://github.com/opencv/opencv_contrib/archive/3.3.0.zip \
+&& unzip -q opencv.zip \
+&& unzip -q contrib.zip \
+&& ls -l \
 && mkdir /opencv-3.3.0/cmake_binary \
 && cd /opencv-3.3.0/cmake_binary \
-&& cmake -DBUILD_TIFF=ON \
+&& cmake \
+  -D OPENCV_EXTRA_MODULES_PATH=/opencv_contrib-3.3.0/modules \
+  -D BUILD_TIFF=ON \
   -D BUILD_opencv_java=OFF \
   -D WITH_CUDA=OFF \
   -D ENABLE_AVX=ON \
@@ -59,12 +64,13 @@ RUN wget https://github.com/opencv/opencv/archive/3.3.0.zip \
   -D BUILD_TESTS=OFF \
   -D BUILD_PERF_TESTS=OFF \
   -D CMAKE_BUILD_TYPE=RELEASE \
-  -D CMAKE_INSTALL_PREFIX=$(python3.6 -c "import sys; print(sys.prefix)") \
-  -D PYTHON_EXECUTABLE=$(which python3.6) \
-  -D PYTHON_INCLUDE_DIR=$(python3.6 -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())") \
-  -D PYTHON_PACKAGES_PATH=$(python3.6 -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())") .. \
+  -D CMAKE_INSTALL_PREFIX=$(python -c "import sys; print(sys.prefix)") \
+  -D PYTHON_EXECUTABLE=$(which python) \
+  -D PYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())") \
+  -D PYTHON_PACKAGES_PATH=$(python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())") .. \
 && make install \
-&& rm /3.3.0.zip \
+&& rm /opencv.zip \
+&& rm /contrib.zip \
 && rm -r /opencv-3.3.0
 
 WORKDIR /app/data

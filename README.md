@@ -1,6 +1,6 @@
 # python-opencv-notebook
 
-Ready to run jupyter notebook in docker, with Python 3.6, OpenCV 3.3 and more.
+Ready to run jupyter notebook in docker, with Python 3.6, OpenCV 3.3, OpenCV contrib, and some recommended python libraries for data science (numpy, pandas, sklearn, etc).
 
 ![](preview.png)
 
@@ -37,7 +37,6 @@ Ready to run jupyter notebook in docker, with Python 3.6, OpenCV 3.3 and more.
     >   http://localhost:8888/?token=longsecrettoken
 
     Open the URL in your browser, and you should get access!
-
 
 ### Notes
 
